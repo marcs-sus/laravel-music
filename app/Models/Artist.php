@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artist extends Model
 {
+    protected $fillable = [
+        'name',
+        'bio'
+    ];
+
     public function songs()
     {
         return $this->belongsToMany(Song::class);
