@@ -1,39 +1,38 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Genres
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-</head>
-
-<body>
-    <h1>Genres</h1>
-
-    <a href="{{ route('genres.create') }}">
-        Create Genre
-    </a>
-
-    <ul>
-        @foreach($genres as $genre)
-            <li>
-                {{ $genre->name }}
-
-                <a href="{{ route('genres.edit', $genre) }}">
-                    Edit
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <a href="{{ route('genres.create') }}">
+                    Create Genre
                 </a>
 
-                <form action="{{ route('genres.destroy', $genre) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
+                <ul>
+                    @foreach($genres as $genre)
+                        <li>
+                            {{ $genre->name }} |
 
-                    <button type="submit">
-                        Delete
-                    </button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</body>
+                            <a href="{{ route('genres.edit', $genre) }}">
+                                Edit
+                            </a>
 
-</html>
+                            <form action="{{ route('genres.destroy', $genre) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit">
+                                    └Delete
+                                </button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

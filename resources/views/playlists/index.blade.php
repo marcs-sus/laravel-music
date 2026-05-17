@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Playlists
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-</head>
-
-<body>
-    <h1>Playlists</h1>
-
-    <a href="{{ route('playlists.create') }}">
-        Create Playlists
-    </a>
-
-    <ul>
-        @foreach($playlists as $playlist)
-            <li>
-                {{ $playlist->name }}
-
-                <a href="{{ route('playlists.show', $playlist) }}">
-                    Show
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <a href="{{ route('playlists.create') }}">
+                    Create Playlists
                 </a>
 
-                <a href="{{ route('playlists.edit', $playlist) }}">
-                    Edit
-                </a>
+                <ul>
+                    @foreach($playlists as $playlist)
+                        <li>
+                            {{ $playlist->name }} |
 
-                <form action="{{ route('playlists.destroy', $playlist) }}" method="POST">
-                    @csrf\
-                    @method('DELETE')
+                            <a href="{{ route('playlists.show', $playlist) }}">
+                                Show
+                            </a>
+                            -
+                            <a href="{{ route('playlists.edit', $playlist) }}">
+                                Edit
+                            </a>
 
-                    <button type="submit">
-                        Delete
-                    </button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</body>
+                            <form action="{{ route('playlists.destroy', $playlist) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
 
-</html>
+                                <button type="submit">
+                                    └Delete
+                                </button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

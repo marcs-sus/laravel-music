@@ -1,50 +1,49 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Album
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-</head>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form action="{{ route('albums.update', $album) }}" method="POST">
 
-<body>
-    <h1>Edit Album</h1>
+                    @csrf
+                    @method('PUT')
 
-    <form action="{{ route('albums.update', $album) }}" method="POST">
+                    <input type="text" name="title" value="{{ $album->title }}">
+                    <input type="date" name="release_date" value="{{ $album->release_date }}">
 
-        @csrf
-        @method('PUT')
+                    <p>Artist(s)</p>
+                    <ul>
+                        @foreach($artists as $artist)
+                            <li>
+                                <input type="checkbox" name="artists[]" value="{{ $artist->id }}" {{ $album->artists->contains($artist->id) ? 'checked' : '' }}>
 
-        <input type="text" name="title" value="{{ $album->title }}">
-        <input type="date" name="release_date" value="{{ $album->release_date }}">
+                                {{ $artist->name }}
+                            </li>
+                        @endforeach
+                    </ul>
 
-        <p>Artist(s)</p>
-        <ul>
-            @foreach($artists as $artist)
-                <li>
-                    <input type="checkbox" name="artists[]" value="{{ $artist->id }}" {{ $album->artists->contains($artist->id) ? 'checked' : '' }}>
+                    <p>Genre(s)</p>
+                    <ul>
+                        @foreach($genres as $genre)
+                            <li>
+                                <input type="checkbox" name="genres[]" value="{{ $genre->id }}" {{ $album->genres->contains($genre->id) ? 'checked' : '' }}>
 
-                    {{ $artist->name }}
-                </li>
-            @endforeach
-        </ul>
+                                {{ $genre->name }}
+                            </li>
+                        @endforeach
+                    </ul>
 
-        <p>Genre(s)</p>
-        <ul>
-            @foreach($genres as $genre)
-                <li>
-                    <input type="checkbox" name="genres[]" value="{{ $genre->id }}" {{ $album->genres->contains($genre->id) ? 'checked' : '' }}>
-
-                    {{ $genre->name }}
-                </li>
-            @endforeach
-        </ul>
-
-        <br>
-        <button type="submit">
-            Update
-        </button>
-    </form>
-</body>
-
-</html>
+                    <br>
+                    <button type="submit">
+                        Update
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

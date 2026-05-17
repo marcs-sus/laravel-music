@@ -1,61 +1,60 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Create Song
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-</head>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
 
-<body>
-    <h1>Create Song</h1>
+                    @csrf
 
-    <form action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
+                    <input type="text" name="title" placeholder="Song title">
+                    <input type="number" name="duration" placeholder="Song duration">
+                    <br>
 
-        @csrf
+                    <select name="album_id">
+                        @foreach($albums as $album)
+                            <option value="{{ $album->id }}">
+                                {{ $album->title }}
+                            </option>
+                        @endforeach
+                    </select>
 
-        <input type="text" name="title" placeholder="Song title">
-        <input type="number" name="duration" placeholder="Song duration">
-        <br>
+                    <p>Artist(s)</p>
+                    <ul>
+                        @foreach($artists as $artist)
+                            <li>
+                                <input type="checkbox" name="artists[]" value="{{ $artist->id }}">
 
-        <select name="album_id">
-            @foreach($albums as $album)
-                <option value="{{ $album->id }}">
-                    {{ $album->title }}
-                </option>
-            @endforeach
-        </select>
+                                {{ $artist->name }}
+                            </li>
+                        @endforeach
+                    </ul>
 
-        <p>Artist(s)</p>
-        <ul>
-            @foreach($artists as $artist)
-                <li>
-                    <input type="checkbox" name="artists[]" value="{{ $artist->id }}">
+                    <p>Genre(s)</p>
+                    <ul>
+                        @foreach($genres as $genre)
+                            <li>
+                                <input type="checkbox" name="genres[]" value="{{ $genre->id }}">
 
-                    {{ $artist->name }}
-                </li>
-            @endforeach
-        </ul>
+                                {{ $genre->name }}
+                            </li>
+                        @endforeach
+                    </ul>
 
-        <p>Genre(s)</p>
-        <ul>
-            @foreach($genres as $genre)
-                <li>
-                    <input type="checkbox" name="genres[]" value="{{ $genre->id }}">
+                    <p>Audio File</p>
+                    <input type="file" name="audio_file" accept="audio/*">
 
-                    {{ $genre->name }}
-                </li>
-            @endforeach
-        </ul>
-
-        <p>Audio File</p>
-        <input type="file" name="audio_file" accept="audio/*">
-
-        <br>
-        <button type="submit">
-            Save
-        </button>
-    </form>
-</body>
-
-</html>
+                    <br>
+                    <button type="submit">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

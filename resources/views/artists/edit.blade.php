@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Artist
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-</head>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form action="{{ route('artists.update', $artist) }}" method="POST">
 
-<body>
-    <h1>Edit Artist</h1>
+                    @csrf
+                    @method('PUT')
 
-    <form action="{{ route('artists.update', $artist) }}" method="POST">
+                    <input type="text" name="name" value="{{ $artist->name }}">
+                    <input type="text" name="bio" value="{{ $artist->bio }}">
 
-        @csrf
-        @method('PUT')
-
-        <input type="text" name="name" value="{{ $artist->name }}">
-        <input type="text" name="bio" value="{{ $artist->bio }}">
-
-        <br>
-        <button type="submit">
-            Update
-        </button>
-    </form>
-</body>
-
-</html>
+                    <br>
+                    <button type="submit">
+                        Update
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
